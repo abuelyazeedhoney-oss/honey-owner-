@@ -23,7 +23,9 @@ input,select{width:100%;padding:11px;margin-top:4px;border:1px solid var(--bd);b
 #md{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:5}#md.on{display:flex}
 #sh{background:var(--cd);width:100%;max-width:720px;border-radius:24px 24px 0 0;max-height:94%;overflow:auto;padding:14px 14px calc(20px + env(safe-area-inset-bottom))}#sh .btn{margin:10px 0 0;width:100%}
 #lg{position:fixed;inset:0;background:var(--bg);z-index:9;display:none;align-items:center;justify-content:center;padding:20px}#lg>div{width:100%;max-width:380px}
+#ins{display:none;align-items:center;gap:8px;background:#1d160c;color:#fff;padding:10px 14px;font-size:14px}#ins span{flex:1}#ins button{border:0;border-radius:10px;padding:8px 14px;font-weight:bold;font-size:14px}#insb{background:#f2b632;color:#3b2a14}#inx{background:none;color:#fff}
 </style></head><body>
+<div id="ins"><span id="ins1">📲 ثبّت التطبيق على موبايلك</span><button id="insb">تثبيت</button><button id="inx">✕</button></div>
 <h1>🛠️ إدارة المنحل</h1>
 <div class="tb"><button data-t="p">المنتجات</button><button data-t="s">بيانات المحل</button><button data-t="u">الحساب</button></div>
 <div id="lg"><div><h2>🔐 دخول المالك</h2><input id="le" type="email" placeholder="الإيميل" dir="ltr"><input id="lp" type="password" placeholder="كلمة السر" dir="ltr"><button class="btn" id="lb" style="margin:10px 0 0;width:100%">دخول</button><p id="lm" style="color:#b3261e;font-size:14px"></p></div></div>
@@ -70,5 +72,13 @@ if(t.id=="fi"&&t.files[0]){cmp(t.files[0],u=>{ed.img=u;$("pv").innerHTML='<img s
 if(t.dataset.k&&t.dataset.k.slice(0,3)!="ed.")save()});
 function go(d){D=d;R()}
 window.setData=function(d){var f=!D;D=d;if(f||(tab=="p"&&!$("md").classList.contains("on")))R()};
+var DP,ST=matchMedia("(display-mode: standalone)").matches||navigator.standalone;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();DP=e});
+window.addEventListener("appinstalled",()=>{$("ins").style.display="none"});
+if(!ST)$("ins").style.display="flex";
+$("inx").onclick=()=>$("ins").style.display="none";
+$("insb").onclick=async()=>{if(DP){DP.prompt();await DP.userChoice;DP=null;$("ins").style.display="none";return}
+var ar=typeof L=="undefined"||L=="ar",ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+alert(ar?(ios?"اضغط زرار المشاركة ثم «إضافة إلى الشاشة الرئيسية»":"من قايمة المتصفح (⋮) اختار «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية»"):(ios?"Tap Share, then Add to Home Screen":"Open the browser menu (⋮) and choose Install app or Add to Home screen"))};
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
 </script><script type="module" src="admin.js"></script></body></html>
